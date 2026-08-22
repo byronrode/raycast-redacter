@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+repo_root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+cd "$repo_root"
+
+# This extension has no database, daemon, tunnel, or supervised service to repair.
+test -d node_modules || echo "[resume] Dependencies are missing; run .agents/setup" >&2
+echo "[resume] Ready"

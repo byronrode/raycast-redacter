@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+repo_root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+cd "$repo_root"
+
+echo "[setup] Checking Node.js toolchain"
+command -v node >/dev/null || { echo "[setup] Node.js is required but was not found" >&2; exit 1; }
+command -v npm >/dev/null || { echo "[setup] npm is required but was not found" >&2; exit 1; }
+
+node_major="$(node -p 'Number(process.versions.node.split(".")[0])')"
+if (( node_major < 22 )); then
+  echo "[setup] Node.js 22 or newer is required (found $(node --version))" >&2
+  exit 1
+fi
+
+echo "[setup] Installing locked npm dependencies"
+time npm ci --no-audit --no-fund
+
+echo "[setup] Verifying TypeScript and editor JavaScript"
+time npm run typecheck
+node --check assets/editor.js
+
+echo "[setup] Complete"

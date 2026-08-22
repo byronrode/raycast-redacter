@@ -1,1 +1,4 @@
 tasks
+node_modules/
+dist/
+.amp/portals/*
