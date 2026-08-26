@@ -8,6 +8,8 @@
   const imageContext = imageCanvas.getContext("2d");
   const overlayContext = overlayCanvas.getContext("2d");
   const sourceImage = new Image();
+  const sourceCanvas = document.createElement("canvas");
+  const sourceContext = sourceCanvas.getContext("2d");
 
   const state = {
     filename: "image.png",
@@ -53,6 +55,9 @@
       canvas.width = width;
       canvas.height = height;
     }
+    sourceCanvas.width = width;
+    sourceCanvas.height = height;
+    sourceContext.drawImage(sourceImage, 0, 0);
     $("#dimensions").textContent = `${width} × ${height}px`;
     $("#loading").hidden = true;
     $("#canvasStack").hidden = false;
@@ -72,6 +77,10 @@
     });
     bindRange("#mosaicSize", "#mosaicValue", (value) => {
       state.mosaicSize = value;
+      [...state.masks, ...state.redo].forEach((mask) => {
+        if (mask.effect === "mosaic") mask.mosaicSize = value;
+      });
+      if (state.draft?.effect === "mosaic") state.draft.mosaicSize = value;
       state.mosaicCanvas = null;
       render();
     });
@@ -87,16 +96,14 @@
     $("#redoButton").addEventListener("click", redo);
     $("#clearButton").addEventListener("click", clearAll);
     $("#detectTextButton").addEventListener("click", detectText);
-    $("#saveButton").addEventListener("click", () => saveCanvas(imageCanvas, "redacted"));
+    $("#saveButton").addEventListener("click", saveOutput);
     $("#copyButton").addEventListener("click", copyCanvas);
-    $("#frameButton").addEventListener("click", saveFramed);
+    $("#framedOutput").addEventListener("change", updateFrameControls);
     $("#zoomIn").addEventListener("click", () => setZoom(state.zoom + .1));
     $("#zoomOut").addEventListener("click", () => setZoom(state.zoom - .1));
     $("#fitButton").addEventListener("click", fitCanvas);
     window.addEventListener("resize", () => { if (state.zoom < 1) fitCanvas(); });
     window.addEventListener("keydown", keyboardShortcuts);
-    $("aside").addEventListener("scroll", updateScrollHint);
-    updateScrollHint();
   }
 
   function bindRange(inputSelector, outputSelector, onInput) {
@@ -356,7 +363,7 @@
     button.disabled = true;
     progress.hidden = false;
     try {
-      const result = await window.Tesseract.recognize(sourceImage, "eng", {
+      const result = await window.Tesseract.recognize(sourceCanvas, "eng", {
         logger(message) {
           if (typeof message.progress === "number") $("#ocrProgressBar").style.width = `${Math.round(message.progress * 100)}%`;
           $("#ocrStatus").textContent = sentenceCase(message.status || "Detecting text…");
@@ -392,16 +399,22 @@
 
   async function copyCanvas() {
     try {
-      const blob = await canvasBlob(imageCanvas);
+      const framed = $("#framedOutput").checked;
+      const blob = await canvasBlob(framed ? createFramedCanvas() : imageCanvas);
       if (!navigator.clipboard?.write || !window.ClipboardItem) throw new Error("Clipboard image access is unavailable in this browser");
       await navigator.clipboard.write([new ClipboardItem({ "image/png": blob })]);
-      toast("Redacted PNG copied");
+      toast(`${framed ? "Framed" : "Redacted"} PNG copied`);
     } catch (error) {
       toast(`${error.message || error}. Use Save PNG instead.`);
     }
   }
 
-  async function saveFramed() {
+  async function saveOutput() {
+    const framed = $("#framedOutput").checked;
+    await saveCanvas(framed ? createFramedCanvas() : imageCanvas, framed ? "redacted-framed" : "redacted");
+  }
+
+  function createFramedCanvas() {
     const padding = Math.max(72, Math.round(Math.min(imageCanvas.width, imageCanvas.height) * .09));
     const frame = document.createElement("canvas");
     frame.width = imageCanvas.width + padding * 2;
@@ -416,11 +429,9 @@
 
     const radius = Math.max(12, Math.min(28, padding * .22));
     context.save();
-    if ($("#frameShadow").checked) {
-      context.shadowColor = "rgba(0, 0, 0, .42)";
-      context.shadowBlur = Math.max(22, padding * .38);
-      context.shadowOffsetY = Math.max(8, padding * .12);
-    }
+    context.shadowColor = "rgba(0, 0, 0, .42)";
+    context.shadowBlur = Math.max(22, padding * .38);
+    context.shadowOffsetY = Math.max(8, padding * .12);
     roundedRect(context, padding, padding, imageCanvas.width, imageCanvas.height, radius);
     context.fillStyle = "#fff";
     context.fill();
@@ -430,7 +441,14 @@
     context.clip();
     context.drawImage(imageCanvas, padding, padding);
     context.restore();
-    await saveCanvas(frame, "redacted-framed");
+    return frame;
+  }
+
+  function updateFrameControls() {
+    const framed = $("#framedOutput").checked;
+    $("#frameStyle").hidden = !framed;
+    $("#copyButton").textContent = framed ? "Copy Framed" : "Copy PNG";
+    $("#saveButton").textContent = framed ? "Save Framed" : "Save PNG";
   }
 
   function frameColors(style) {
@@ -488,17 +506,12 @@
       event.shiftKey ? redo() : undo();
     } else if (modifier && event.key.toLowerCase() === "s") {
       event.preventDefault();
-      void saveCanvas(imageCanvas, "redacted");
+      void saveOutput();
     } else if (event.key === "Escape" && state.draft) {
       state.draft = null;
       state.drawing = false;
       drawOverlay();
     }
-  }
-
-  function updateScrollHint() {
-    const aside = $("aside");
-    $("#scrollHint").classList.toggle("done", aside.scrollTop + aside.clientHeight >= aside.scrollHeight - 8);
   }
 
   let toastTimer;

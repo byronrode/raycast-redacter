@@ -19,6 +19,14 @@
       </div>
       <div class="header-actions">
         <span class="privacy"><span></span> Stays on this computer</span>
+        <label class="frame-toggle"><input id="framedOutput" type="checkbox" /> Frame</label>
+        <select id="frameStyle" class="frame-style" aria-label="Frame background" hidden>
+          <option value="violet">Violet dusk</option>
+          <option value="sunset">Sunset</option>
+          <option value="ocean">Ocean</option>
+          <option value="graphite">Graphite</option>
+          <option value="paper">Paper</option>
+        </select>
         <button id="copyButton" class="button secondary">Copy PNG</button>
         <button id="saveButton" class="button primary">Save PNG</button>
       </div>
@@ -67,22 +75,6 @@
             <input id="brushSize" type="range" min="8" max="160" value="36" />
           </div>
         </section>
-
-        <section>
-          <h2>Presentation frame</h2>
-          <label for="frameStyle">Background</label>
-          <select id="frameStyle">
-            <option value="violet">Violet dusk</option>
-            <option value="sunset">Sunset</option>
-            <option value="ocean">Ocean</option>
-            <option value="graphite">Graphite</option>
-            <option value="paper">Paper</option>
-          </select>
-          <label class="check"><input id="frameShadow" type="checkbox" checked /> Add window shadow</label>
-          <button id="frameButton" class="button secondary full">Save Framed PNG</button>
-          <p class="hint">Built in because ray.so does not accept arbitrary image uploads.</p>
-        </section>
-        <div id="scrollHint" class="scroll-hint">More options ↓</div>
       </aside>
 
       <section class="workspace" aria-label="Image canvas">
