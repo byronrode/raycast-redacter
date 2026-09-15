@@ -4,10 +4,11 @@ Redact sensitive information from screenshots and photos without modifying the s
 
 ## How to use
 
-1. Select an image in Finder or File Explorer, then run **Redact Image**. You can also choose an image in the command's file picker.
-2. Choose Rectangle, Circle, Freeform, Paint, or Text and mark everything that should be hidden.
-3. Keep the default Mosaic effect, or switch to Blur or Solid.
-4. Save a plain redacted PNG, copy it, or export it with a presentation-ready frame.
+1. Select an image in Finder or File Explorer, copy an image to the clipboard, or choose one in the command's file picker.
+2. Run **Redact Image**. Press `⌘V` on macOS or `Ctrl+V` on Windows to load the clipboard image. You can also paste another image directly into the canvas editor.
+3. Choose Rectangle, Circle, Freeform, Paint, or Text and mark everything that should be hidden.
+4. Keep the default Mosaic effect, or switch to Blur or Solid.
+5. Save a plain redacted PNG, copy it, or export it with a presentation-ready frame.
 
 Text detection runs locally in the browser with Tesseract.js. On its first use, the browser downloads the OCR engine and English language model from the jsDelivr CDN; the selected image is not uploaded.
 

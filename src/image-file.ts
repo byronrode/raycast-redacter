@@ -1,5 +1,6 @@
 import { stat } from "node:fs/promises";
 import { extname } from "node:path";
+import { fileURLToPath } from "node:url";
 
 const MIME_TYPES: Record<string, string> = {
   ".avif": "image/avif",
@@ -17,6 +18,10 @@ const MIME_TYPES: Record<string, string> = {
 
 export function imageMimeType(path: string): string | undefined {
   return MIME_TYPES[extname(path).toLowerCase()];
+}
+
+export function clipboardFilePath(value: string): string {
+  return value.startsWith("file://") ? fileURLToPath(value) : value;
 }
 
 export async function validateImage(path: string): Promise<string> {

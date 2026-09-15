@@ -7,7 +7,7 @@
   const overlayCanvas = $("#overlayCanvas");
   const imageContext = imageCanvas.getContext("2d");
   const overlayContext = overlayCanvas.getContext("2d");
-  const sourceImage = new Image();
+  let sourceImage = new Image();
   const sourceCanvas = document.createElement("canvas");
   const sourceContext = sourceCanvas.getContext("2d");
 
@@ -104,6 +104,7 @@
     $("#fitButton").addEventListener("click", fitCanvas);
     window.addEventListener("resize", () => { if (state.zoom < 1) fitCanvas(); });
     window.addEventListener("keydown", keyboardShortcuts);
+    window.addEventListener("paste", pasteImage);
   }
 
   function bindRange(inputSelector, outputSelector, onInput) {
@@ -511,6 +512,41 @@
       state.draft = null;
       state.drawing = false;
       drawOverlay();
+    }
+  }
+
+  async function pasteImage(event) {
+    const imageItem = [...(event.clipboardData?.items || [])].find((item) => item.type.startsWith("image/"));
+    const imageFile = imageItem?.getAsFile()
+      || [...(event.clipboardData?.files || [])].find((file) => file.type.startsWith("image/"));
+    if (!imageFile) return;
+    event.preventDefault();
+    if (state.masks.length && !confirm("Replace this image and discard its redactions?")) return;
+
+    const url = URL.createObjectURL(imageFile);
+    try {
+      const nextImage = new Image();
+      await new Promise((resolve, reject) => {
+        nextImage.onload = resolve;
+        nextImage.onerror = () => reject(new Error("The browser cannot decode the pasted image."));
+        nextImage.src = url;
+      });
+      sourceImage = nextImage;
+      state.filename = imageFile.name || "clipboard-image.png";
+      state.masks = [];
+      state.redo = [];
+      state.words = [];
+      state.draft = null;
+      state.start = null;
+      state.drawing = false;
+      state.mosaicCanvas = null;
+      $("#filename").textContent = state.filename;
+      setupCanvas();
+      toast("Clipboard image loaded");
+    } catch (error) {
+      toast(error.message || String(error));
+    } finally {
+      URL.revokeObjectURL(url);
     }
   }
 
