@@ -145,7 +145,10 @@ input[type="color"] { width: 100%; height: 34px; padding: 3px; border: 1px solid
   background-image: radial-gradient(#272730 1px, transparent 1px);
   background-size: 18px 18px;
 }
+.frame-preview { flex: none; line-height: 0; }
+.frame-preview.framed { padding: var(--frame-padding); background-image: var(--frame-background); }
 .canvas-stack { position: relative; flex: none; box-shadow: 0 12px 45px rgba(0,0,0,.48); line-height: 0; }
+.frame-preview.framed .canvas-stack { overflow: hidden; border-radius: var(--frame-radius); }
 .canvas-stack canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
 #imageCanvas { position: relative; }
 #overlayCanvas { touch-action: none; cursor: crosshair; }

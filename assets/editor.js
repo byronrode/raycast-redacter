@@ -60,7 +60,7 @@
     sourceContext.drawImage(sourceImage, 0, 0);
     $("#dimensions").textContent = `${width} × ${height}px`;
     $("#loading").hidden = true;
-    $("#canvasStack").hidden = false;
+    $("#framePreview").hidden = false;
     fitCanvas();
     render();
   }
@@ -99,12 +99,14 @@
     $("#saveButton").addEventListener("click", saveOutput);
     $("#copyButton").addEventListener("click", copyCanvas);
     $("#framedOutput").addEventListener("change", updateFrameControls);
+    $("#frameStyle").addEventListener("change", updateFramePreview);
     $("#zoomIn").addEventListener("click", () => setZoom(state.zoom + .1));
     $("#zoomOut").addEventListener("click", () => setZoom(state.zoom - .1));
     $("#fitButton").addEventListener("click", fitCanvas);
     window.addEventListener("resize", () => { if (state.zoom < 1) fitCanvas(); });
     window.addEventListener("keydown", keyboardShortcuts);
     window.addEventListener("paste", pasteImage);
+    updateFrameControls();
   }
 
   function bindRange(inputSelector, outputSelector, onInput) {
@@ -416,7 +418,7 @@
   }
 
   function createFramedCanvas() {
-    const padding = Math.max(72, Math.round(Math.min(imageCanvas.width, imageCanvas.height) * .09));
+    const padding = framePadding();
     const frame = document.createElement("canvas");
     frame.width = imageCanvas.width + padding * 2;
     frame.height = imageCanvas.height + padding * 2;
@@ -428,7 +430,7 @@
     context.fillStyle = gradient;
     context.fillRect(0, 0, frame.width, frame.height);
 
-    const radius = Math.max(12, Math.min(28, padding * .22));
+    const radius = frameRadius(padding);
     context.save();
     context.shadowColor = "rgba(0, 0, 0, .42)";
     context.shadowBlur = Math.max(22, padding * .38);
@@ -450,6 +452,24 @@
     $("#frameStyle").hidden = !framed;
     $("#copyButton").textContent = framed ? "Copy Framed" : "Copy PNG";
     $("#saveButton").textContent = framed ? "Save Framed" : "Save PNG";
+    updateFramePreview();
+    fitCanvas();
+  }
+
+  function updateFramePreview() {
+    const preview = $("#framePreview");
+    const framed = $("#framedOutput").checked;
+    const colors = frameColors($("#frameStyle").value);
+    preview.classList.toggle("framed", framed);
+    preview.style.setProperty("--frame-background", `linear-gradient(to bottom right, ${colors[0]}, ${colors[1]})`);
+  }
+
+  function framePadding() {
+    return Math.max(72, Math.round(Math.min(imageCanvas.width, imageCanvas.height) * .09));
+  }
+
+  function frameRadius(padding) {
+    return Math.max(12, Math.min(28, padding * .22));
   }
 
   function frameColors(style) {
@@ -487,7 +507,8 @@
 
   function fitCanvas() {
     const viewport = $("#canvasViewport");
-    const fit = Math.min(1, (viewport.clientWidth - 64) / imageCanvas.width, (viewport.clientHeight - 64) / imageCanvas.height);
+    const padding = $("#framedOutput").checked ? framePadding() * 2 : 0;
+    const fit = Math.min(1, (viewport.clientWidth - 64) / (imageCanvas.width + padding), (viewport.clientHeight - 64) / (imageCanvas.height + padding));
     setZoom(fit);
   }
 
@@ -496,6 +517,10 @@
     const stack = $("#canvasStack");
     stack.style.width = `${Math.round(imageCanvas.width * state.zoom)}px`;
     stack.style.height = `${Math.round(imageCanvas.height * state.zoom)}px`;
+    const padding = framePadding();
+    const preview = $("#framePreview");
+    preview.style.setProperty("--frame-padding", `${Math.round(padding * state.zoom)}px`);
+    preview.style.setProperty("--frame-radius", `${Math.round(frameRadius(padding) * state.zoom)}px`);
     $("#zoomValue").textContent = `${Math.round(state.zoom * 100)}%`;
     drawOverlay();
   }
