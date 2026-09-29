@@ -4,7 +4,7 @@ import { getSelectedFinderItems } from "@raycast/api";
 
 const execFileAsync = promisify(execFile);
 
-export async function getSelectedImagePath(): Promise<string | undefined> {
+export async function getSelectedFilePath(): Promise<string | undefined> {
   try {
     if (process.platform === "darwin") {
       return (await getSelectedFinderItems())[0]?.path;
