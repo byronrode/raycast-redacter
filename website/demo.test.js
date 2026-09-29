@@ -24,6 +24,11 @@ test("production page ships playable local media instead of a blocked iframe", (
     "utf8",
   );
   assert.doesNotMatch(page, /<iframe\b/i);
+  const cssPath = page.match(/href="([^"]+\.css)"/)?.[1];
+  const css = readFileSync(new URL(`./dist${cssPath}`, import.meta.url), "utf8");
+  const fontPath = css.match(/url\(([^)]+\.ttf)\)/)?.[1];
+  assert.ok(fontPath, "compiled CSS references the shared bundled font");
+  assert.ok(statSync(new URL(`./dist${fontPath}`, import.meta.url)).size > 1000);
   const video = page.match(/<video\b[^>]+>/i)?.[0];
   assert.ok(video, "compiled page contains the demonstration video");
   for (const attribute of ["src", "poster"]) {
