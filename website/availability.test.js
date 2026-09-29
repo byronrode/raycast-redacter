@@ -21,6 +21,6 @@ test("approved Store availability can be enabled and disabled", () => {
   });
   assert.equal(
     getAvailability({ enabled: "false", storeUrl }).label,
-    "Coming to launch soon",
+    "Coming to a launcher near you soon",
   );
 });

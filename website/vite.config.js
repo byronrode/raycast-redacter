@@ -10,6 +10,10 @@ function editorDemo() {
     "utf8",
   );
   const files = () => ({
+    "vendor/fonts/PlusJakartaSans.ttf": readFileSync(
+      new URL("../assets/vendor/fonts/PlusJakartaSans.ttf", import.meta.url),
+    ),
+    "vendor/fonts/OFL.txt": source("vendor/fonts/OFL.txt"),
     "editor.html": source("editor.html")
       .replace(/<script[^>]*>[\s\S]*?<\/script>/g, "")
       .replace(
@@ -41,11 +45,13 @@ function editorDemo() {
         if (!request.url?.startsWith("/demo/") || !content) return next();
         response.setHeader(
           "Content-Type",
-          name.endsWith(".css")
-            ? "text/css"
-            : name.endsWith(".js")
-              ? "text/javascript"
-              : "text/html",
+          name.endsWith(".ttf")
+            ? "font/ttf"
+            : name.endsWith(".css")
+              ? "text/css"
+              : name.endsWith(".js")
+                ? "text/javascript"
+                : "text/html",
         );
         response.end(content);
       });

@@ -12,5 +12,9 @@ export function getAvailability({ enabled, storeUrl } = {}) {
   } catch {
     /* Incomplete launch configuration keeps installation unavailable. */
   }
-  return { label: "Coming to launch soon", href: "#pricing", available: false };
+  return {
+    label: "Coming to a launcher near you soon",
+    href: "#pricing",
+    available: false,
+  };
 }

@@ -1,4 +1,10 @@
-@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap");
+@font-face {
+  font-family: "Plus Jakarta Sans";
+  font-style: normal;
+  font-weight: 200 800;
+  font-display: swap;
+  src: url("/demo/vendor/fonts/PlusJakartaSans.ttf") format("truetype");
+}
 :root {
   font-family: "Plus Jakarta Sans", sans-serif;
   color: #24251f;
