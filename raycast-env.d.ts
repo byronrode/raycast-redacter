@@ -15,10 +15,14 @@ declare type Preferences = ExtensionPreferences
 declare namespace Preferences {
   /** Preferences accessible in the `redact-image` command */
   export type RedactImage = ExtensionPreferences & {}
+  /** Preferences accessible in the `manage-license` command */
+  export type ManageLicense = ExtensionPreferences & {}
 }
 
 declare namespace Arguments {
   /** Arguments passed to the `redact-image` command */
   export type RedactImage = {}
+  /** Arguments passed to the `manage-license` command */
+  export type ManageLicense = {}
 }
 

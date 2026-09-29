@@ -4,7 +4,7 @@ import { tmpdir } from "node:os";
 import { dirname, join } from "node:path";
 import { promisify } from "node:util";
 import { Clipboard } from "@raycast/api";
-import { clipboardFilePath } from "./image-file";
+import { clipboardFilePath } from "./source-file";
 
 const execFileAsync = promisify(execFile);
 

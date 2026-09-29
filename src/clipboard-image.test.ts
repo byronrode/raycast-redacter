@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { clipboardFilePath } from "./image-file";
+import { clipboardFilePath } from "./source-file";
 
 test("converts clipboard file URLs to file-system paths", () => {
   assert.equal(

@@ -1,8 +1,8 @@
 {
   "$schema": "https://www.raycast.com/schemas/extension.json",
   "name": "image-redacter",
-  "title": "Image Redacter",
-  "description": "Redact sensitive text and regions in images without changing the original",
+  "title": "Cloakshot",
+  "description": "Redact sensitive text and regions in images and PDFs without changing the original",
   "icon": "icon.png",
   "author": "byronrode",
   "platforms": [
@@ -17,8 +17,14 @@
   "commands": [
     {
       "name": "redact-image",
-      "title": "Redact Image",
-      "description": "Redact a selected image in a private canvas editor",
+      "title": "Redact Image or PDF",
+      "description": "Redact a selected image or PDF in a private canvas editor",
+      "mode": "view"
+    },
+    {
+      "name": "manage-license",
+      "title": "Manage License",
+      "description": "View your Cloakshot plan, upgrade to Pro, or enter a license key",
       "mode": "view"
     }
   ],
@@ -28,17 +34,22 @@
     "fix-lint": "ray lint --fix",
     "lint": "ray lint",
     "test": "tsx --test src/**/*.test.ts",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "vendor": "node scripts/vendor.mjs",
+    "site:dev": "npm --prefix website run dev",
+    "site:build": "npm --prefix website run build"
   },
   "dependencies": {
     "@raycast/api": "^2.0.5",
-    "@raycast/utils": "^2.3.0"
+    "@raycast/utils": "^2.3.0",
+    "pdf-lib": "^1.17.1"
   },
   "devDependencies": {
     "@raycast/eslint-config": "^2.2.0",
     "@types/node": "^24.3.0",
     "@types/react": "^19.1.11",
     "eslint": "^9.34.0",
+    "pdfjs-dist": "^6.3.289",
     "prettier": "^3.6.2",
     "react": "^19.1.1",
     "tsx": "^4.20.5",

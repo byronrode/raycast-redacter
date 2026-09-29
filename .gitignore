@@ -1,4 +1,9 @@
 tasks
 node_modules/
 dist/
+.DS_Store
+.vercel/
+.env*
+website/node_modules/
 .amp/portals/*
+.vercel
