@@ -81,7 +81,9 @@ document.querySelector("#replay").addEventListener("click", () => {
   updateStep(0);
   play();
 });
-video.addEventListener("timeupdate", () => updateStep(video.currentTime));
+video.addEventListener("timeupdate", () =>
+  updateStep(videoFailed || reducedMotion.matches ? Infinity : video.currentTime),
+);
 video.addEventListener("play", updatePause);
 video.addEventListener("pause", updatePause);
 video.addEventListener("canplay", play);
