@@ -23,4 +23,5 @@ jobs:
       - run: npm run lint
       - run: npm run build
       - run: npm --prefix website ci --include=optional
+      - run: npm --prefix website test
       - run: npm run site:build
