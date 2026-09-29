@@ -1,0 +1,15 @@
+{
+  "name": "cloakshot-demo-video",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "render": "remotion render src/index.jsx Cloakshot ../public/demo/cloakshot.mp4 --codec=h264 --pixel-format=yuv420p --crf=18 --concurrency=2 && remotion still src/index.jsx Cloakshot ../public/demo/cloakshot-poster.png --frame=285 --image-format=png",
+    "studio": "remotion studio src/index.jsx"
+  },
+  "dependencies": {
+    "@remotion/cli": "4.0.527",
+    "remotion": "4.0.527",
+    "react": "19.3.0",
+    "react-dom": "19.3.0"
+  }
+}

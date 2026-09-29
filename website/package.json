@@ -7,7 +7,8 @@
     "dev": "vite --host 127.0.0.1",
     "build": "vite build",
     "preview": "vite preview --host 127.0.0.1",
-    "test": "node --test availability.test.js"
+    "test": "node --test availability.test.js demo.test.js",
+    "video:render": "npm --prefix video run render"
   },
   "devDependencies": {
     "vite": "^7.1.0"

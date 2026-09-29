@@ -1,8 +1,8 @@
 # Marketing site
 
-Hero, demonstration, and pricing. The demonstration reuses `../assets/editor.html`
-and `editor.css` at build time with a fictional screenshot. It does not load the
-editor's document/OCR code or access the clipboard.
+Hero, demonstration, and pricing. The pre-rendered Remotion video uses captures
+of the actual editor with fictional content. It performs no document processing
+or clipboard access in the website. See [video authoring](video/README.md).
 
 `npm run dev`, `npm test`, `npm run build`.
 

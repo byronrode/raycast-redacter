@@ -73,22 +73,20 @@
             <p>Cloakshot in action</p>
             <button id="pause" aria-label="Pause demonstration">Ⅱ</button>
           </div>
-          <div class="demo-stage" data-stage="0">
-            <div class="launcher">
-              <span class="search-icon" aria-hidden="true">⌕</span
-              ><span>redact<span class="caret"></span></span>
-              <div>
-                <img class="mini-mark" src="/icon.png" alt="" /><span
-                  >Open Redaction Canvas<small>Cloakshot</small></span
-                ><kbd>↵</kbd>
-              </div>
-            </div>
-            <iframe
-              class="editor-demo"
-              src="/demo/editor.html"
-              title="Cloakshot canvas demonstration with fictional sample details"
-              tabindex="-1"
-            ></iframe>
+          <div class="demo-stage">
+            <video
+              id="demo-video"
+              class="demo-video"
+              src="/demo/cloakshot.mp4"
+              poster="/demo/cloakshot-poster.png"
+              muted
+              loop
+              playsinline
+              preload="metadata"
+              aria-label="Demonstration: open Cloakshot, redact fictional details, add a frame, and copy a PNG"
+            >
+              Your browser can show the finished Cloakshot screenshot above.
+            </video>
           </div>
           <div class="demo-steps">
             <span class="step active">01 <b>Open</b></span
