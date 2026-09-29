@@ -1,0 +1,174 @@
+@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap");
+:root {
+  font-family: "Plus Jakarta Sans", sans-serif;
+}
+header {
+  padding: 0 16px;
+}
+.privacy,
+#searchableToggle,
+#loading,
+#upgradeDialog {
+  display: none;
+}
+main {
+  grid-template-columns: 210px minmax(0, 1fr);
+}
+#filename {
+  font-size: 12px;
+}
+#frameControls {
+  gap: 6px;
+}
+#planBadge {
+  min-width: 60px;
+}
+#planBadge:empty::after {
+  content: "Free · 4 left";
+}
+#frameStyle {
+  display: block !important;
+  width: 118px;
+}
+.canvas-viewport {
+  padding: 25px;
+}
+.canvas-stack {
+  width: 570px;
+  line-height: normal;
+}
+#framePreview {
+  padding: 0;
+  transition: padding 0.6s;
+}
+body[data-stage="3"] #framePreview,
+body[data-stage="4"] #framePreview {
+  padding: 28px 28px 42px;
+  background: linear-gradient(to bottom right, #3b1d78, #c6477b);
+}
+.sample-shot {
+  padding: 34px;
+  background: #fffefb;
+  color: #64665c;
+  border-radius: 5px;
+}
+.sample-heading {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-size: 19px;
+}
+.sample-heading small {
+  display: block;
+  margin-top: 5px;
+  color: #96998c;
+  font-size: 14px;
+}
+.avatar {
+  display: grid;
+  place-items: center;
+  width: 47px;
+  height: 47px;
+  background: #e7e9de;
+  border-radius: 50%;
+  color: #767e62;
+}
+.sample-menu {
+  margin-left: auto;
+}
+.sample-shot > p {
+  font-size: 18px;
+  line-height: 1.8;
+  margin: 28px 0;
+}
+.sample-detail {
+  display: flex;
+  gap: 18px;
+  padding: 12px 0;
+  font-size: 17px;
+  color: #939884;
+}
+.sensitive {
+  color: #656d57;
+  position: relative;
+}
+.mask {
+  position: absolute;
+  inset: -2px -4px;
+  background: #111827;
+  border-radius: 2px;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.5s;
+}
+.mask.second {
+  transition-delay: 0.3s;
+}
+body[data-stage="2"] .mask,
+body[data-stage="3"] .mask,
+body[data-stage="4"] .mask {
+  transform: scaleX(1);
+}
+.sample-attachment {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  border-top: 1px solid #eceee5;
+  margin-top: 22px;
+  padding-top: 22px;
+  font-size: 17px;
+}
+.sample-attachment > span {
+  padding: 12px;
+  border: 1px solid #eceee5;
+  border-radius: 5px;
+}
+.sample-attachment small {
+  display: block;
+  font-size: 14px;
+  color: #9ca38c;
+  margin-top: 5px;
+}
+.fixture-label {
+  position: absolute;
+  bottom: -27px;
+  right: 0;
+  font-size: 12px;
+  color: #fff;
+  opacity: 0;
+}
+body[data-stage="3"] .fixture-label,
+body[data-stage="4"] .fixture-label {
+  opacity: 1;
+}
+.demo-toast {
+  position: absolute;
+  bottom: 75px;
+  left: 56%;
+  padding: 15px 24px;
+  border-radius: 8px;
+  background: #24242d;
+  color: #fff;
+  border: 1px solid #484858;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+body[data-stage="4"] .demo-toast {
+  opacity: 1;
+}
+body[data-stage="4"] #copyButton {
+  border-color: #7c5cff;
+}
+button,
+select,
+input {
+  font: inherit;
+}
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition: none !important;
+    animation: none !important;
+  }
+}

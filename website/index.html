@@ -6,7 +6,7 @@
     <title>Cloakshot — Share the shot. Keep the secret.</title>
     <meta
       name="description"
-      content="Redact screenshots and PDFs, add a beautiful frame, and copy or save. A private, local canvas launched from Raycast. Five free shots every day."
+      content="Redact images and PDFs. Frame, copy, or save. Five free shots every day, processed locally."
     />
     <meta
       property="og:title"
@@ -14,7 +14,7 @@
     />
     <meta
       property="og:description"
-      content="A little privacy before you hit paste. Redact, frame, share. Five free shots a day."
+      content="Redact, frame, share. Five free shots a day."
     />
     <meta name="theme-color" content="#f6f3ec" />
     <link rel="icon" href="/icon.png" />
@@ -29,18 +29,16 @@
         ></a
       >
       <div>
-        <a href="#how">How it works</a><a href="#pricing">Pricing</a
-        ><a class="nav-action" href="#install"
-          >Get Cloakshot <span aria-hidden="true">↗</span></a
+        <a href="#pricing">Pricing</a
+        ><a class="nav-action" data-availability href="#pricing"
+          >Coming to launch soon</a
         >
       </div>
     </nav>
     <main>
       <section class="hero">
         <div class="intro">
-          <p class="eyebrow">
-            <span></span> A LITTLE PRIVACY BEFORE YOU HIT PASTE
-          </p>
+          <p class="eyebrow"><span></span>REDACT. FRAME. COPY.</p>
           <h1>
             Share the shot.<br />Keep the
             <span class="secret"
@@ -52,12 +50,12 @@
             conversation? Those can stay with you.
           </p>
           <p class="sublede">
-            Redact, frame, and share from a private canvas.<br />Launched from
-            Raycast. Everything stays local.
+            Redact images and PDFs. Frame, copy, or save.<br />Everything stays
+            on your computer.
           </p>
           <div class="hero-actions">
-            <a class="button primary" href="#install"
-              >Get Cloakshot <span aria-hidden="true">↗</span></a
+            <a class="button primary" data-availability href="#pricing"
+              >Coming to launch soon</a
             ><button class="button text" id="replay">
               Watch it work <span aria-hidden="true">↻</span>
             </button>
@@ -72,7 +70,7 @@
         >
           <div class="demo-top">
             <span><i></i><i></i><i></i></span>
-            <p>One shot. Ready to share.</p>
+            <p>Cloakshot in action</p>
             <button id="pause" aria-label="Pause demonstration">Ⅱ</button>
           </div>
           <div class="demo-stage" data-stage="0">
@@ -80,118 +78,35 @@
               <span class="search-icon" aria-hidden="true">⌕</span
               ><span>redact<span class="caret"></span></span>
               <div>
-                <span class="mini-mark">▰</span
-                ><span>Open Redaction Canvas<small>Cloakshot</small></span
+                <img class="mini-mark" src="/icon.png" alt="" /><span
+                  >Open Redaction Canvas<small>Cloakshot</small></span
                 ><kbd>↵</kbd>
               </div>
             </div>
-            <div class="shot-frame">
-              <div class="sample-shot">
-                <div class="sample-heading">
-                  <span class="avatar">M</span>
-                  <div>
-                    <strong>Morgan Ellis</strong><small>Today at 10:42</small>
-                  </div>
-                  <span class="sample-menu">···</span>
-                </div>
-                <p>
-                  Hey! Here's the preview for Friday.<br />Looks good to share,
-                  just hide my details.
-                </p>
-                <div class="sample-detail">
-                  <span>Email</span
-                  ><span class="sensitive"
-                    >morgan@example.com<span class="mask"></span
-                  ></span>
-                </div>
-                <div class="sample-detail">
-                  <span>Access key</span
-                  ><span class="sensitive"
-                    >demo_7h3_pr1v4t3_b1t<span class="mask second"></span
-                  ></span>
-                </div>
-                <div class="sample-attachment">
-                  <span>↗</span>
-                  <div>
-                    <strong>Launch preview.png</strong
-                    ><small>Ready for a little privacy.</small>
-                  </div>
-                </div>
-              </div>
-              <span class="frame-label">Made with Cloakshot</span>
-            </div>
-            <div class="mini-toolbar">
-              <span class="tool-selected">▭ <span>Redact</span></span
-              ><span>◯</span><span>✎</span><span class="toolbar-divider"></span
-              ><span>▧ <span>Frame</span></span
-              ><span class="copy-state">Copy PNG ↗</span>
-            </div>
-            <div class="copied" role="status">
-              ✓ Copied. Secrets left behind.
-            </div>
+            <iframe
+              class="editor-demo"
+              src="/demo/editor.html"
+              title="Cloakshot canvas demonstration with fictional sample details"
+              tabindex="-1"
+            ></iframe>
           </div>
           <div class="demo-steps">
             <span class="step active">01 <b>Open</b></span
             ><span class="step">02 <b>Redact</b></span
             ><span class="step">03 <b>Frame</b></span
-            ><span class="step">04 <b>Share</b></span>
+            ><span class="step">04 <b>Copy</b></span>
           </div>
         </div>
       </section>
-      <div class="trust-line">
-        <span>YOUR FILES STAY YOUR FILES</span><span>Local processing</span
-        ><span>Originals untouched</span><span>No screenshot uploads</span>
-      </div>
-      <section id="how" class="how">
-        <div>
-          <p class="eyebrow">FROM PRIVATE TO PRESENTABLE</p>
-          <h2>A quick edit.<br />A better share.</h2>
-        </div>
-        <ol>
-          <li>
-            <span>01</span>
-            <div>
-              <h3>Bring your shot.</h3>
-              <p>
-                Select an image or PDF, or use an image from your clipboard.
-                Open the canvas from Raycast.
-              </p>
-            </div>
-          </li>
-          <li>
-            <span>02</span>
-            <div>
-              <h3>Cover the private bits.</h3>
-              <p>
-                Draw a rectangle, circle, or freeform shape. Paint over a region
-                or detect text locally. Use solid redaction for secrets; blur
-                and mosaic for visual cleanup.
-              </p>
-            </div>
-          </li>
-          <li>
-            <span>03</span>
-            <div>
-              <h3>Give it a good send-off.</h3>
-              <p>
-                Choose a frame, copy a PNG to your clipboard, or save a new
-                image or PDF. Your original stays exactly as it was.
-              </p>
-            </div>
-          </li>
-        </ol>
-      </section>
       <section id="pricing" class="pricing">
         <div class="pricing-heading">
-          <p class="eyebrow">SMALL TOOL. SIMPLE DEAL.</p>
-          <h2>Free to make it a habit.</h2>
-          <p>Use it a little. Love it a lot. Unlock it once.</p>
+          <p class="eyebrow">SIMPLE PRICING</p>
+          <h2>Five free. Or unlimited.</h2>
         </div>
         <div class="plans">
           <article>
-            <p class="plan-name">THE EVERYDAY SHOT</p>
-            <h3>Free<span>forever</span></h3>
-            <p>For the things you share now and then.</p>
+            <p class="plan-name">FREE</p>
+            <h3>Free<span>every day</span></h3>
             <ul>
               <li>Five different shots every day</li>
               <li>All image redaction tools and frames</li>
@@ -199,12 +114,13 @@
               <li>PDFs up to three pages</li>
               <li>No account needed</li>
             </ul>
-            <a class="button outline" href="#install">Start with five free</a>
+            <a class="button outline" data-availability href="#pricing"
+              >Coming to launch soon</a
+            >
           </article>
           <article class="pro">
-            <p class="plan-name">THE NO-LIMITS SHOT</p>
-            <h3>$19<span>once. yours.</span></h3>
-            <p>A little thank-you. A lot more freedom.</p>
+            <p class="plan-name">PRO</p>
+            <h3>$19<span>once-off</span></h3>
             <ul>
               <li>Unlimited shots, every day</li>
               <li>No Cloakshot label or watermark</li>
@@ -216,72 +132,16 @@
               Pro checkout opens soon
             </button>
             <p class="purchase-note">
-              No subscription. No payment taken until checkout is live.
+              No subscription. Checkout opens at launch.
             </p>
           </article>
         </div>
-        <p class="source-note">
-          Prefer to make it your own? The extension is MIT licensed. You're
-          welcome to build it locally, change it, or fork it.
-        </p>
-      </section>
-      <section id="install" class="install">
-        <span class="mark large" aria-hidden="true">▰</span>
-        <h2>Your next screenshot<br />has nothing to hide.</h2>
-        <p>
-          Cloakshot is coming to the Raycast Store.<br />Until review is
-          complete, you can install it locally.
-        </p>
-        <a
-          class="button primary"
-          href="https://github.com/byronrode/raycast-redacter#development"
-          >Local installation guide <span aria-hidden="true">↗</span></a
-        >
-        <p class="small">Requires Raycast. No Cloakshot account needed.</p>
-      </section>
-      <section class="faq" aria-label="Frequently asked questions">
-        <details>
-          <summary>Does my screenshot leave my computer?</summary>
-          <p>
-            No. The editor runs on your computer. Images and PDFs are processed
-            locally. Text detection downloads an OCR engine and language model,
-            but does not upload your file. Payment checkout is separate and
-            never receives your document.
-          </p>
-        </details>
-        <details>
-          <summary>What counts as a free shot?</summary>
-          <p>
-            Opening a new file that the free plan can export uses one shot.
-            Reopening the same file on the same day is free. The five-shot
-            allowance resets at local midnight. Long PDFs open in preview
-            without using a shot.
-          </p>
-        </details>
-        <details>
-          <summary>Can I use it without Raycast Pro?</summary>
-          <p>
-            Yes. Cloakshot does not use Raycast AI or require a Raycast Pro
-            subscription. Cloakshot Pro is its own optional once-off upgrade.
-          </p>
-        </details>
-        <details>
-          <summary>Is blur enough for sensitive information?</summary>
-          <p>
-            Use a solid fill for sensitive text and secrets. Blur and mosaic are
-            visual effects and may leave information recognizable. Redacted PDF
-            pages are flattened into a new document so covered text is removed
-            from the text layer.
-          </p>
-        </details>
       </section>
     </main>
     <footer>
       <a class="wordmark" href="#">cloakshot<span class="dot">.</span></a>
-      <p>Made for a little more peace of mind.</p>
-      <a href="https://github.com/byronrode/raycast-redacter"
-        >Source & feedback ↗</a
-      >
+      <p>Images & PDFs · Processed locally</p>
+      <span class="footer-name">© Cloakshot</span>
     </footer>
     <script type="module" src="/main.js"></script>
   </body>
