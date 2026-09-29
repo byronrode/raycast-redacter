@@ -14,6 +14,7 @@ const pause = document.querySelector("#pause");
 const reducedMotion = matchMedia("(prefers-reduced-motion: reduce)");
 const videoSource = video.getAttribute("src");
 let userPaused = false;
+let videoFailed = false;
 function updateStep(time) {
   steps.forEach((step, index) =>
     step.classList.toggle("active", index === demoStepAt(time)),
@@ -22,10 +23,12 @@ function updateStep(time) {
 function updatePause() {
   const paused = video.paused || reducedMotion.matches;
   pause.textContent = paused ? "▶" : "Ⅱ";
-  pause.disabled = reducedMotion.matches;
+  pause.disabled = reducedMotion.matches || videoFailed;
   pause.setAttribute(
     "aria-label",
-    reducedMotion.matches
+    videoFailed
+      ? "Demonstration unavailable"
+      : reducedMotion.matches
       ? "Demonstration paused for reduced motion"
       : paused
         ? "Play demonstration"
@@ -33,7 +36,7 @@ function updatePause() {
   );
 }
 async function play() {
-  if (reducedMotion.matches || document.hidden || userPaused) return;
+  if (videoFailed || reducedMotion.matches || document.hidden || userPaused) return;
   try {
     await video.play();
   } catch {
@@ -43,6 +46,11 @@ async function play() {
 }
 function applyMotionPreference() {
   video.pause();
+  if (videoFailed) {
+    updateStep(Infinity);
+    updatePause();
+    return;
+  }
   if (reducedMotion.matches) {
     video.removeAttribute("src");
     video.load();
@@ -67,7 +75,7 @@ document.querySelector("#replay").addEventListener("click", () => {
       block: "center",
       behavior: reducedMotion.matches ? "instant" : "smooth",
     });
-  if (reducedMotion.matches) return;
+  if (videoFailed || reducedMotion.matches) return;
   userPaused = false;
   video.currentTime = 0;
   updateStep(0);
@@ -78,11 +86,11 @@ video.addEventListener("play", updatePause);
 video.addEventListener("pause", updatePause);
 video.addEventListener("canplay", play);
 video.addEventListener("error", () => {
+  videoFailed = true;
   video.removeAttribute("src");
   video.load();
   updateStep(Infinity);
-  pause.disabled = true;
-  pause.setAttribute("aria-label", "Demonstration unavailable");
+  updatePause();
 });
 document.addEventListener("visibilitychange", () => {
   if (document.hidden) video.pause();
